@@ -1,9 +1,10 @@
 
 
 import React, { useState } from "react";
-import BoardMain from "./boradMain";
 import { GetServerSideProps } from 'next'
 import { InferGetServerSidePropsType } from 'next'
+import MainContainer from "../components/mainContainer.js";
+import Board from "../components/board";
 
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
@@ -23,8 +24,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
 export default function Home({data}) {
   return (
-    <>
-      <BoardMain data={data}/>
-    </>
+    <MainContainer>
+      <Board data={data}/>
+    </MainContainer>
   );
 }

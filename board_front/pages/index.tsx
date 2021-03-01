@@ -1,20 +1,30 @@
-// pages/index.tsx
+
 
 import React, { useState } from "react";
-import Head from "next/head";
+import BoardMain from "./boradMain";
+import { GetServerSideProps } from 'next'
+import { InferGetServerSidePropsType } from 'next'
 
-export default function Home() {
-  const [text, setText] = useState<string>("자바스크립트");
 
-  setTimeout(() => {
-    setText("타입스크립트");
-  }, 1000);
+export const getServerSideProps: GetServerSideProps = async (context) => {
 
+  const apiUrl = "https://boardnextype.herokuapp.com/api/board/boardList";
+  
+  const res: Response = await fetch(apiUrl);
+
+  const boardList:JSON = await res.json();
+
+  return {
+      props: { 
+          data: boardList,
+      },
+  };
+}
+
+export default function Home({data}) {
   return (
-    <div className="container">
-      <div>
-        <span>{text} 적용 완료</span>
-      </div>
-    </div>
+    <>
+      <BoardMain data={data}/>
+    </>
   );
 }

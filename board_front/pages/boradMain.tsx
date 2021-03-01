@@ -1,18 +1,16 @@
 import React, { useState } from "react";
-import Head from "next/head";
+import MainContainer from "../components/mainContainer.js";
+import Board from "../components/board";
 
-export default function boardMain() {
-  const [text, setText] = useState<string>("자바스크립트");
-
-  setTimeout(() => {
-    setText("타입스크립트");
-  }, 1000);
-
+function BoardMain({data}) {
+  //const [text, setText] = useState<string>("자바스크립트");
   return (
-    <div className="container">
-      <div>
-        <span>{text} 적용 완료</span>
-      </div>
-    </div>
+    <MainContainer>
+      <Board data={data}/>
+    </MainContainer>
   );
 }
+
+
+
+export default BoardMain;

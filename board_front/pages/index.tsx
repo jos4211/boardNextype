@@ -8,46 +8,34 @@ import MainContainer from "../components/mainContainer";
 import Board from "../components/board";
 
 
-// export const getStaticProps: GetServerSideProps = async (context) => {
-
-//   const apiUrl:string = "https://boardnextype.herokuapp.com/api/board/boardList";
-
-//   try{
-//     const res: Response  = await fetch(apiUrl);
-    
-//     console.log("boardList",res);
-
-//     const boardList = await res.json();
-    
-  
-    
-//     return {
-//       props: { 
-//         data: boardList,
-//       },
-//     };
-//   }catch(e){
-//     console.log(e);
-//     return {
-//       props: { 
-//         data: null,
-//       },
-//     };
-//   }
-    
-//   }
-
-export async function getStaticPaths() {
+export const getStaticProps: GetServerSideProps = async (context) => {
 
   const apiUrl:string = "https://boardnextype.herokuapp.com/api/board/boardList";
+
+  try{
+    const res: Response  = await fetch(apiUrl);
+    
+    console.log("boardList",res);
+    
+    const boardList = await res.json();
+    
   
-  const res: Response = await fetch(apiUrl);
-
-  const boardList = await res.json();
-
-  return {params:{data:boardList},fallback: false };
-}
-
+    
+    return {
+      props: { 
+        data: boardList,
+      },
+    };
+  }catch(e){
+    console.log(e);
+    return {
+      props: { 
+        data: null,
+      },
+    };
+  }
+    
+  }
 
 
 export default function Home({data}) {

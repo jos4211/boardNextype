@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useReducer } from "react";
 import axios from "axios";
 import {useRouter} from "next/router";
-import MainContainer from "../components/mainContainer.js";
+import MainContainer from "../components/mainContainer";
 import AddContent from "../components/addContent";
 
 
@@ -33,7 +33,6 @@ function reducer(state, action) {
     [action.name]: action.value,
   };
 }
-  const apiUrl = "https://boardnextype.herokuapp.com/api/board/addContent";
 
 
 
@@ -68,7 +67,7 @@ export default function addContent() {
             content: content,
           };
 
-          const result = await axios.post("http://localhost:4000/api/board/addContent", formData);
+          const result = await axios.post("https://boardnextype.herokuapp.com/api/board/addContent", formData);
 
           alert("게시물 작성이 완료되었습니다.");
           dispatch({ type: "RESET" });

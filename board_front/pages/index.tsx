@@ -3,24 +3,40 @@
 import React, { useState } from "react";
 import { GetServerSideProps } from 'next'
 import { InferGetServerSidePropsType } from 'next'
-import MainContainer from "../components/mainContainer.js";
+import axios from "axios";
+import MainContainer from "../components/mainContainer";
 import Board from "../components/board";
 
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
+export const getStaticProps: GetServerSideProps = async (context) => {
 
-  const apiUrl = "https://boardnextype.herokuapp.com/api/board/boardList";
+  const apiUrl:string = "https://boardnextype.herokuapp.com/api/board/boardList";
+
+  try{
+    const res: Response  = await fetch(apiUrl);
+    
+    console.log("boardList",res);
+    
+    const boardList = await res.json();
+    
   
-  const res: Response = await fetch(apiUrl);
-
-  const boardList:JSON = await res.json();
-
-  return {
+    
+    return {
       props: { 
-          data: boardList,
+        data: boardList,
       },
-  };
-}
+    };
+  }catch(e){
+    console.log(e);
+    return {
+      props: { 
+        data: null,
+      },
+    };
+  }
+    
+  }
+
 
 export default function Home({data}) {
   return (

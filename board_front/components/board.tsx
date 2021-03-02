@@ -96,7 +96,7 @@ function BoardMain({data}) {
         </Thead>
         <Tbody>
 
-        {data.map((props,index)=>
+        {data &&  data.map((props,index)=>
             {
                 return (
                     <Link href={`/contents/${props._id}`} key={index}>

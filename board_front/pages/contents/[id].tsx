@@ -1,20 +1,26 @@
 import React from "react";
-import MainContainer from "../../components/mainContainer.js";
+import MainContainer from "../../components/mainContainer";
 import Contents from "../../components/contents";
-
+import axios from "axios";
 import { GetServerSideProps } from 'next'
 import { InferGetServerSidePropsType } from 'next'
 
+export async function getStaticPaths() {
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
+  const apiUrl:string = "https://boardnextype.herokuapp.com/api/board/boardList";
+  
+  const res: Response = await fetch(apiUrl);
 
-  const id:string|string[] = context.params.id;
+  const boardList = await res.json();
 
-  const postId = {
-    postId:id.toString()
-  };
+  const paths = boardList.map((props)=> ({ params: { id: props._id } }))
 
-  const apiUrl:string = `https://boardnextype.herokuapp.com/api/board/viewContent/?postId=${postId.postId}`;
+  return {paths,fallback: false };
+}
+
+export const getStaticProps: GetServerSideProps = async ({params}) => {
+
+  const apiUrl:string = `https://boardnextype.herokuapp.com/api/board/viewContent/?postId=${params.id}`;
   
   const res: Response = await fetch(apiUrl);
 
